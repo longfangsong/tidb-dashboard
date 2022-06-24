@@ -27,6 +27,7 @@ import AppOverview from '@lib/apps/Overview/index.meta'
 import AppClusterInfo from '@lib/apps/ClusterInfo/index.meta'
 import AppKeyViz from '@lib/apps/KeyViz/index.meta'
 import AppTopSQL from '@lib/apps/TopSQL/index.meta'
+import AppDeadlock from '@lib/apps/Deadlock/index.meta'
 import AppStatement from '@lib/apps/Statement/index.meta'
 import AppSystemReport from '@lib/apps/SystemReport/index.meta'
 import AppSlowQuery from '@lib/apps/SlowQuery/index.meta'
@@ -158,6 +159,7 @@ async function webPageStart() {
     .register(AppClusterInfo)
     .register(AppKeyViz)
     .register(AppTopSQL)
+    .register(AppDeadlock)
     .register(AppStatement)
     .register(AppSystemReport)
     .register(AppSlowQuery)
