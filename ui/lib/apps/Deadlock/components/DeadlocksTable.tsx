@@ -8,12 +8,30 @@ import {
 } from '@lib/components'
 import { useClientRequest } from '@lib/utils/useClientRequest'
 import client from '@lib/client'
+import { useMemoizedFn } from 'ahooks'
 
 function DeadlocksTable() {
   const { data, isLoading, error } = useClientRequest((reqConfig) =>
     client.getInstance().deadlockListGet(reqConfig)
   )
   let [items, setItems] = useState(data!)
+
+  const handleRowClick = useMemoizedFn(
+    (rec, idx, ev: React.MouseEvent<HTMLElement>) => {
+      // the evicted record's digest is empty string
+      if (!rec.digest) {
+        return
+      }
+      const qs = DetailPage.buildQuery({
+        digest: rec.digest,
+        schema: rec.schema_name,
+        beginTime: controller.data!.timeRange[0],
+        endTime: controller.data!.timeRange[1],
+      })
+      openLink(`/statement/detail?${qs}`, ev, navigate)
+    }
+  )
+
   return (
     <div>
       <AnimatedSkeleton showSkeleton={isLoading} />
