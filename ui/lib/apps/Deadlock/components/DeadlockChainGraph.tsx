@@ -141,7 +141,7 @@ function DeadlockChainGraph(prop: Prop) {
           {
             name: 'sql',
             key: 'sql',
-            minWidth: 300,
+            minWidth: 350,
             onRender: (it) => <HighlightSQL sql={it.sql} compact />,
           },
           {
@@ -153,7 +153,7 @@ function DeadlockChainGraph(prop: Prop) {
           {
             name: 'holding_lock_trx',
             key: 'holding_lock_trx',
-            minWidth: 100,
+            minWidth: 150,
             onRender: (it) => it.holding_lock_trx,
           },
         ]}

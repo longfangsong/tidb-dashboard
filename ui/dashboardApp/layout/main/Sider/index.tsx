@@ -135,6 +135,7 @@ function Sider({
     // useAppMenuItem(registry, 'diagnose'),
     useAppMenuItem(registry, 'search_logs'),
     useAppMenuItem(registry, 'deadlock'),
+    useAppMenuItem(registry, 'lockwait'),
     // useAppMenuItem(registry, '__APP_NAME__'),
     // NOTE: Don't remove above comment line, it is a placeholder for code generator
     debugSubMenu,

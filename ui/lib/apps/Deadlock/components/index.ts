@@ -1,3 +1,3 @@
-import DeadlocksTable from './DeadlocksTable'
+import DeadlockChainGraph from './DeadlockChainGraph'
 
-export { DeadlocksTable }
+export { DeadlockChainGraph }

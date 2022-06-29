@@ -28,6 +28,7 @@ import AppClusterInfo from '@lib/apps/ClusterInfo/index.meta'
 import AppKeyViz from '@lib/apps/KeyViz/index.meta'
 import AppTopSQL from '@lib/apps/TopSQL/index.meta'
 import AppDeadlock from '@lib/apps/Deadlock/index.meta'
+import AppLockWait from '@lib/apps/LockWait/index.meta'
 import AppStatement from '@lib/apps/Statement/index.meta'
 import AppSystemReport from '@lib/apps/SystemReport/index.meta'
 import AppSlowQuery from '@lib/apps/SlowQuery/index.meta'
@@ -159,7 +160,6 @@ async function webPageStart() {
     .register(AppClusterInfo)
     .register(AppKeyViz)
     .register(AppTopSQL)
-    .register(AppDeadlock)
     .register(AppStatement)
     .register(AppSystemReport)
     .register(AppSlowQuery)
@@ -171,6 +171,8 @@ async function webPageStart() {
     .register(AppConfiguration)
     .register(AppDebugAPI)
     .register(AppOptimizerTrace)
+    .register(AppDeadlock)
+    .register(AppLockWait)
   // .register(__APP_NAME__)
   // NOTE: Don't remove above comment line, it is a placeholder for code generator
 

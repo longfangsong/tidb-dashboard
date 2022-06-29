@@ -33,6 +33,8 @@ export const ListChart = forwardRef<Chart, ListChartProps>(
       timeRangeTimestamp,
     })
     const { chartData } = useChartData(bundle.data)
+
+    console.log(chartData)
     const { digestMap } = useDigestMap(bundle.data)
 
     useChange(() => {
@@ -79,7 +81,6 @@ export const ListChart = forwardRef<Chart, ListChartProps>(
           } else {
             text = sql.length > 50 ? `${sql.slice(0, 50)}...` : sql
           }
-
           return (
             <BarSeries
               key={digest}
