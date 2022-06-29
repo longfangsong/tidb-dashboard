@@ -9,7 +9,7 @@ export default function () {
       <Router>
         <Routes>
           <Route path="/deadlock" element={<List />} />
-          <Route path="/deadlock/detail/:deadlock_id" element={<Detail />} />
+          <Route path="/deadlock/detail" element={<Detail />} />
         </Routes>
       </Router>
     </Root>

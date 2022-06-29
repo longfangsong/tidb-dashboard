@@ -42,7 +42,8 @@ func registerRouter(r *gin.RouterGroup, auth *user.AuthService, s *Service) {
 
 type Model struct {
 	ID             int64  `json:"id" gorm:"column:DEADLOCK_ID"`
-	Key            string `json:"key" gorm:"column:KEY"`
+	OccurTime      string `json:"occur_time" gorm:"column:OCCUR_TIME"`
+	Key            string `json:"locked_key" gorm:"column:KEY"`
 	KeyInfo        string `json:"key_info" gorm:"column:KEY_INFO"`
 	SQL            string `json:"sql" gorm:"column:CURRENT_SQL_DIGEST_TEXT"`
 	TryLockTrx     int64  `json:"try_lock_trx" gorm:"column:TRY_LOCK_TRX_ID"`
