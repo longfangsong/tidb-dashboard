@@ -8,6 +8,7 @@ export interface PhysicalOperatorNode extends LogicalOperatorNode {
   parentNode: null | PhysicalOperatorNode
   childrenNodes: PhysicalOperatorNode[]
   mapping: string
+  selected: boolean
 }
 
 interface PhysicalOperatorTreeProps {

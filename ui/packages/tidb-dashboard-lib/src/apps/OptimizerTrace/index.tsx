@@ -53,8 +53,7 @@ interface OptimizerData {
   }
   physical: {
     final: LogicalOperatorNode
-    selected_candidates: PhysicalOperatorNode[]
-    discarded_candidates: PhysicalOperatorNode[]
+    candidates: { [key: string]: PhysicalOperatorNode }
   }
   final: LogicalOperatorNode[]
   isFastPlan: boolean
@@ -132,6 +131,7 @@ function LogicalOptimization({ data }: { data: OptimizerData }) {
   const Steps = () => (
     <>
       {logicalData.steps.map((s) => {
+        console.log(s)
         const Action = () => (
           <div className={styles.steps}>
             <h3>{s.name}</h3>
@@ -139,10 +139,8 @@ function LogicalOptimization({ data }: { data: OptimizerData }) {
               const content = `action ${actionStep.index}: ${actionStep.action}
               ${actionStep.reason && `, reason: ${actionStep.reason}`}`
               return (
-                <Tooltip title={content}>
-                  <p key={index} className={styles.step_info}>
-                    {content}
-                  </p>
+                <Tooltip title={content} key={index}>
+                  <p className={styles.step_info}>{content}</p>
                 </Tooltip>
               )
             })}
@@ -188,32 +186,36 @@ function LogicalOptimization({ data }: { data: OptimizerData }) {
 
 function PhysicalOptimization({ data }: { data: OptimizerData }) {
   const physicalData = data.physical
-  const selectedCandidates = physicalData.selected_candidates
-  const discardedCandidates = physicalData.discarded_candidates
-  const allCandidates = [...selectedCandidates, ...discardedCandidates]
-  const allCandidatesMap = allCandidates.reduce((acc, c) => {
-    acc[c.id] = c
-    return acc
-  }, {} as { [props: string]: PhysicalOperatorNode })
-  const operatorCandidates = allCandidates.reduce((acc, c) => {
-    if (!acc[c.mapping]) {
-      acc[c.mapping] = []
-    }
-    if (!!c.children?.length) {
-      if (!c.childrenNodes) {
-        c.childrenNodes = []
+  const allCandidates = physicalData.candidates
+  const allCandidatesMap = Object.entries(allCandidates).reduce(
+    (acc, [id, c]) => {
+      acc[id] = c
+      return acc
+    },
+    {} as { [props: string]: PhysicalOperatorNode }
+  )
+  const operatorCandidates = Object.entries(allCandidates).reduce(
+    (acc, [id, c]) => {
+      if (!acc[c.mapping]) {
+        acc[c.mapping] = []
       }
-      c.childrenNodes.push(
-        ...c.children.map((cid) => {
-          const cnode = allCandidatesMap[cid]
-          cnode.parentNode = c
-          return cnode
-        })
-      )
-    }
-    acc[c.mapping].push(c)
-    return acc
-  }, {} as { [props: string]: PhysicalOperatorNode[] })
+      if (!!c.children?.length) {
+        if (!c.childrenNodes) {
+          c.childrenNodes = []
+        }
+        c.childrenNodes.push(
+          ...c.children.map((cid) => {
+            const cnode = allCandidatesMap[cid]
+            cnode.parentNode = c
+            return cnode
+          })
+        )
+      }
+      acc[c.mapping].push(c)
+      return acc
+    },
+    {} as { [props: string]: PhysicalOperatorNode[] }
+  )
   const rootOperatorCandidates = Object.entries(operatorCandidates).map(
     ([mapping, candidates]) =>
       [mapping, candidates.filter((c) => !c.parentNode)] as [
